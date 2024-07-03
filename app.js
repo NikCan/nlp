@@ -1,16 +1,13 @@
 const express = require('express');
 const cors = require('cors')
 const NLPCloudClient = require('nlpcloud');
+require('dotenv').config();
 
 const app = express();
 app.use(cors())
 app.use(express.json());
 
-const port = 3000;
-
-const YOUR_MODEL_NAME = 'finetuned-llama-3-70b';
-
-const client = new NLPCloudClient({model:YOUR_MODEL_NAME,token:process.env.YOUR_API_KEY,gpu:true})
+const client = new NLPCloudClient({model:process.env.YOUR_MODEL_NAME,token:process.env.YOUR_API_KEY,gpu:true})
 app.post('/nlp', async (req, res) => {
     const { input, context, history } = req.body;
   client.chatbot({ input, context, history })
@@ -23,5 +20,5 @@ app.post('/nlp', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on http://localhost:${process.env.PORT}`);
 });
