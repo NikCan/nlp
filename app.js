@@ -14,7 +14,8 @@ app.post('/nlp', async (req, res) => {
     .then(function (response) {
     res.json(response.data);
   })
-  .catch(function (err) {
+    .catch(function (err) {
+    console.log(err.response)
     res.status(500).json({ error: err.response.data.detail })
   });
 });
